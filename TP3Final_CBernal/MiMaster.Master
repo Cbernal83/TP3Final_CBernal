@@ -1,0 +1,108 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MiMaster.master.cs" Inherits="TP3Final_CBernal.MiMaster" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>TIENDABUY</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <nav class="fixed-top navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container px-4 px-lg-5">
+                    <a class="navbar-brand" href="Default.aspx">Tienda con Bootstrap</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="Default.aspx">Home</a></li>
+                            <% if ((Session["Usuario"] != null))
+                                {%>
+                                  <li class="nav-item"><a class="nav-link" href="Favoritos.aspx">Favoritos</a></li>
+                            <% }%>
+                                 
+
+                            <% if (Session["Usuario"] != null && ((dominio.users)Session["Usuario"]).TU == dominio.TipoUsuario.admin)
+                                {%>
+
+                            <li class="nav-item"><a class="nav-link" href="GrillaProductos.aspx">Grilla</a></li>
+                            <%  } %>
+                        </ul>
+                             
+                            <%--BUSCADOR--%>
+                                 <div class="d-flex me-4" role="search">
+                                  <asp:TextBox ID="txb_buscadorMaster" Width="350"  runat="server" placeholder="Buscar"  CssClass="form-control me-2" OnTextChanged="txb_buscadorMaster_TextChanged" AutoPostBack="True"></asp:TextBox>
+                                 
+                                </div>
+
+
+                           <%-- <button class="btn btn-outline-dark mr-5" type="submit">
+                                <i class="bi-cart-fill me-1"></i>Carrito                         
+                                <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            </button>--%>
+                      
+
+                            <% if (!(Session["Usuario"] != null))
+                                {%>
+                            <div class="nav-item ">
+                                <a href="Login.aspx" class="nav-link " aria-expanded="false">Login</a>
+                            </div>
+                            <div class="nav-item ">
+                                <a href="Registrarse.aspx" class="btn btn-outline-dark">Registrarse</a>
+                            </div>
+                            <%  } %>
+
+                            <% if (Session["Usuario"] != null)
+                                {%>
+                            
+                                <div class="dropdown show mr-2">
+                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" 
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <asp:Label ID="lbl_usuario" runat="server" Text=""></asp:Label>
+                                    </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="./MiPerfil.aspx">Mi Perfil</a>
+                                        <a class="dropdown-item" href="./Favoritos.aspx">Mis Favoritos</a>
+                                        <div class="dropdown-divider"></div>
+                                        <asp:Button ID="btn_cerrarSesion" runat="server" CssClass="dropdown-item" OnClick="btn_cerrarSesion_Click" Text="Cerrar Sesion" />
+                                        
+                                    </div>
+                                </div>
+                                    <%-- AVATAR SESSION --%>
+                                <div class="">
+                                   <asp:Image ID="img_avatar" runat="server" CssClass="rounded-circle" Width="45px" Height="45px" />
+                                   
+                                </div>
+
+                            <%  } %>
+                       
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+        <footer class="mt-auto p-5 bg-dark">
+            <div class="">
+                <p class="m-0 text-center text-white">Copyright © Website 2023 </p>
+            </div>
+        </footer>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+</html>
